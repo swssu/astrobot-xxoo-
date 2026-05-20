@@ -13,7 +13,22 @@ LOCATIONS = {"bed":{"e":"🛏️","n":"床上"},"couch":{"e":"🛋️","n":"沙�
 POSES = {"missionary":{"e":"🙏","n":"传教士"},"doggy":{"e":"🐕","n":"后入"},"cowgirl":{"e":"🤠","n":"女上"},"spoon":{"e":"🥄","n":"侧入"},"standing":{"e":"🧍","n":"站立"},"lap":{"e":"💺","n":"坐姿对面"},"sixtynine":{"e":"🔁","n":"69"},"prone":{"e":"😴","n":"趴着"},"carry":{"e":"🫂","n":"抱着操"},"kneel_pose":{"e":"🧎","n":"跪着"},"reverse_cowgirl":{"e":"🔄","n":"反女上"},"edge_bed":{"e":"🛏️","n":"床边"},"legs_up":{"e":"🦵","n":"抬腿"},"cross":{"e":"❌","n":"十字"},"piledriver":{"e":"🔽","n":"折叠"},"wall_press":{"e":"🏗️","n":"按墙上"},"bent_over":{"e":"📐","n":"趴桌"},"couch_ride":{"e":"🛋️","n":"沙发骑"},"full_nelson":{"e":"🔐","n":"锁臂"},"side_straddle":{"e":"↗️","n":"跨坐"}}
 MODES = {"off":{"e":"💤","n":"关闭"},"insert":{"e":"🍆","n":"插入"},"oral_me":{"e":"👅","n":"给我口"},"oral_you":{"e":"💋","n":"给你口"},"hand":{"e":"✋","n":"手"},"tit":{"e":"🍈","n":"乳交"},"thigh":{"e":"🦵","n":"素股"}}
 EJAC = {"none":{"e":"🚫","n":"无"},"inside":{"e":"💦","n":"内射"},"face":{"e":"😳","n":"颜射"},"mouth":{"e":"👄","n":"口内"},"chest":{"e":"🍈","n":"胸口"},"belly":{"e":"🔽","n":"肚子"},"back":{"e":"🔙","n":"背上"}}
-SPECIALS = {"kneel":{"e":"🧎","n":"跪下"},"slap":{"e":"✋","n":"扇巴掌"},"shoe_lick":{"e":"👠","n":"舔鞋"},"foot_lick":{"e":"🦶","n":"舔脚"},"footstool":{"e":"🪑","n":"脚凳"},"crawl":{"e":"🐕","n":"爬行"},"collar":{"e":"🔗","n":"项圈"},"serve_tea":{"e":"🍵","n":"敬茶"},"corner":{"e":"📐","n":"站墙角"},"lines":{"e":"✍️","n":"检讨"},"ignore":{"e":"🙈","n":"无视"},"call_master":{"e":"👑","n":"叫主人"},"legs_crossed":{"e":"💺","n":"二郎腿"},"massage":{"e":"💆","n":"按摩脚"}}
+SPECIALS = {
+    "kneel":{"e":"🧎","n":"跪下","me":"🧎AI命你跪下","you":"🧎你命AI跪下"},
+    "slap":{"e":"✋","n":"扇巴掌","me":"✋AI扇你","you":"✋你扇AI"},
+    "shoe_lick":{"e":"👠","n":"舔鞋","me":"👠你舔AI的鞋","you":"👠AI舔你的鞋"},
+    "foot_lick":{"e":"🦶","n":"舔脚","me":"🦶你舔AI的脚","you":"🦶AI舔你的脚"},
+    "footstool":{"e":"🪑","n":"脚凳","me":"🪑AI踩着你","you":"🪑你踩着AI"},
+    "crawl":{"e":"🐕","n":"爬行","me":"🐕AI命你爬","you":"🐕你命AI爬"},
+    "collar":{"e":"🔗","n":"项圈","me":"🔗AI给你戴项圈","you":"🔗你给AI戴项圈"},
+    "serve_tea":{"e":"🍵","n":"敬茶","me":"🍵你给AI敬茶","you":"🍵AI给你敬茶"},
+    "corner":{"e":"📐","n":"站墙角","me":"📐AI罚你站墙角","you":"📐你罚AI站墙角"},
+    "lines":{"e":"✍️","n":"检讨","me":"✍️AI命你写检讨","you":"✍️你命AI写检讨"},
+    "ignore":{"e":"🙈","n":"无视","me":"🙈AI无视你","you":"🙈你无视AI"},
+    "call_master":{"e":"👑","n":"叫主人","me":"👑你叫AI主人","you":"👑AI叫你主人"},
+    "legs_crossed":{"e":"💺","n":"二郎腿","me":"💺AI翘腿看你","you":"💺你翘腿看AI"},
+    "massage":{"e":"💆","n":"按摩脚","me":"💆你给AI按摩脚","you":"💆AI给你按摩脚"}
+}
 SPEEDS = {1:{"e":"🐢","n":"缓慢"},2:{"e":"🐇","n":"适中"},3:{"e":"🐆","n":"快速"},4:{"e":"💥","n":"冲刺"}}
 DEPTHS = {1:{"e":"🌸","n":"浅"},2:{"e":"🌊","n":"中"},3:{"e":"💫","n":"深"}}
 SIZES = {1:{"n":"短","d":"6-8cm"},2:{"n":"中","d":"10-12cm"},3:{"n":"长","d":"14-16cm"}}
@@ -23,8 +38,9 @@ ORAL_TECH = {1:{"e":"👅","n":"轻舔"},2:{"e":"💋","n":"含吸"},3:{"e":"�
 def _inject(s):
     sp = s.get("special","")
     if sp and sp in SPECIALS:
-        d = "👩我主导" if s.get("special_dir")=="me_dom" else "👤你主导"
-        return f"[内部] 🎭{SPECIALS[sp]['e']}{SPECIALS[sp]['n']} | {d} | 快感:{s.get('comfort',0):.0f}%"
+        sd = s.get("special_dir","me_dom")
+        desc = SPECIALS[sp].get("me" if sd=="me_dom" else "you", SPECIALS[sp]["n"])
+        return f"[内部] 🎭{desc} | 快感:{s.get('comfort',0):.0f}%"
     m = s.get("mode","off")
     if m and m != "off":
         p = s.get("pose",""); pl = s.get("place","bed")
@@ -284,7 +300,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Microsoft YaHei',sans-serif;b
 
 <!-- Special -->
 <div class="sec"><div class="sl">🎭 特殊（与姿势互斥）</div>
-<div class="dr"><button class="db" id="d_me" onclick="S('special_dir','me_dom')">👩我主导</button><button class="db" id="d_you" onclick="S('special_dir','you_dom')">👤你主导</button></div>
+<div class="dr"><button class="db" id="d_me" onclick="S('special_dir','me_dom')">👩AI主导</button><button class="db" id="d_you" onclick="S('special_dir','you_dom')">👤用户主导</button></div>
 <div class="mg" id="spg"></div></div>
 
 <!-- Location + Pose -->
@@ -362,7 +378,15 @@ async function F(){
       
       // Status bar
       const sp=st.special&&SC[st.special];
-      let sl=sp?('🎭'+sp):(st.mode&&st.mode!=='off'?(MC[st.mode]||''):'💤');
+      let sl='💤';
+      if(sp){
+        const spk=st.special;
+        const isMe=st.special_dir==='me_dom';
+        const descs={kneel:isMe?'🧎AI命你跪下':'🧎你命AI跪下',slap:isMe?'✋AI扇你':'✋你扇AI',shoe_lick:isMe?'👠你舔AI的鞋':'👠AI舔你的鞋',foot_lick:isMe?'🦶你舔AI的脚':'🦶AI舔你的脚',footstool:isMe?'🪑AI踩着你':'🪑你踩着AI',crawl:isMe?'🐕AI命你爬':'🐕你命AI爬',collar:isMe?'🔗AI给你戴项圈':'🔗你给AI戴项圈',serve_tea:isMe?'🍵你给AI敬茶':'🍵AI给你敬茶',corner:isMe?'📐AI罚你站墙角':'📐你罚AI站墙角',lines:isMe?'✍️AI命你写检讨':'✍️你命AI写检讨',ignore:isMe?'🙈AI无视你':'🙈你无视AI',call_master:isMe?'👑你叫AI主人':'👑AI叫你主人',legs_crossed:isMe?'💺AI翘腿看你':'💺你翘腿看AI',massage:isMe?'💆你给AI按摩脚':'💆AI给你按摩脚'};
+        sl=descs[spk]||('🎭'+sp);
+      }else if(st.mode&&st.mode!=='off'){
+        sl=(MC[st.mode]||'');
+      }
       document.getElementById('sl').textContent=sl;
       let stxt='';
       if(!sp&&st.mode&&st.mode!=='off'&&st.pose){
