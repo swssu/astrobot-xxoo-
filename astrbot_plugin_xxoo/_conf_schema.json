@@ -1,0 +1,4 @@
+{
+  "webui_port": {"description": "WebUI端口","type":"int","default":7721},
+  "webui_password": {"description": "WebUI密码","type":"string","default":""}
+}

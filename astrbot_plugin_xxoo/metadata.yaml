@@ -1,0 +1,9 @@
+name: astrbot_plugin_xxoo
+desc: XXOO插件 - 远程控制性爱场景，支持手机WebUI面板，场景状态注入AI对话上下文。
+display_name: XXOO场景控制
+short_desc: 远程控制性爱场景，WebUI手机面板，AI语气注入
+help: "使用 /xxoo status 查看当前场景。\n/xxoo reset 重置所有状态。\n/xxoo panel 获取面板地址。\n浏览器打开 http://你的IP:7721"
+version: 5.0.0
+author: ayachi nene
+repo: ""
+astrbot_version: ">=4.5.0"
